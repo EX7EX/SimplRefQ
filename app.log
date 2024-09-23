@@ -1,0 +1,9 @@
+2024-09-15 05:41:18,652 INFO: Document:
+2024-09-15 05:45:35,637 INFO: Insert result: 66e6666d3c44c5554276fd86
+2024-09-15 05:45:35,821 INFO: Document: {'_id': ObjectId('66e6666d3c44c5554276fd86'), 'name': 'John Doe', 'age': 30}
+2024-09-15 05:45:36,014 INFO: Update result: 1
+2024-09-15 05:45:36,209 INFO: Delete result: 1
+2024-09-15 05:55:48,758 INFO: Insert result: 66e668d216a8c59dac782b8c
+2024-09-15 05:55:48,945 INFO: Document: {'_id': ObjectId('66e668d216a8c59dac782b8c'), 'name': 'John Doe', 'age': 30}
+2024-09-15 05:55:49,133 INFO: Update result: 1
+2024-09-15 05:55:49,316 INFO: Delete result: 1

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REBL Coin - Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Glitch Background -->
+    <div class="glitch-background"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="leaderboard.html">Leaderboard</a></li>
+            <li><a href="games.html">Mini-Games</a></li>
+            <li><a href="tasks.html">Tasks</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="content">
+        <h1>Welcome to REBL Coin</h1>
+        <p>Your current balance: <strong>1 REBL Coin</strong></p>
+        <button class="neon-button">Claim Daily Reward</button>
+        <button class="neon-button">View Leaderboard</button>
+        <button class="neon-button">Play Mini-Games</button>
+    </section>
+
+    <!-- Hidden Blog Modal -->
+    <div id="hiddenBlogModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>Welcome to finance shotgunning</p>
+        </div>
+    </div>
+
+    <script>
+        // Easter Egg Blog Reveal
+        document.addEventListener('DOMContentLoaded', function() {
+            let clickCount = 0;
+            const buttons = document.querySelectorAll('.neon-button');
+            const modal = document.getElementById('hiddenBlogModal');
+            const closeButton = document.querySelector('.close-button');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    clickCount++;
+                    if (clickCount === 10) {
+                        modal.style.display = 'block'; // Show modal
+                    }
+                });
+            });
+
+            // Close modal functionality
+            closeButton.addEventListener('click', () => {
+                modal.style.display = 'none'; // Hide modal
+            });
+
+            // Close modal if clicked outside of it
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none'; // Hide modal
+                }
+            });
+        });
+    </script>
+</body>
+</html>

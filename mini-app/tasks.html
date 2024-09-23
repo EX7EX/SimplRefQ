@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REBL Coin - Tasks</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="glitch-background"></div>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="leaderboard.html">Leaderboard</a></li>
+            <li><a href="games.html">Mini-Games</a></li>
+            <li><a href="tasks.html">Tasks</a></li>
+        </ul>
+    </nav>
+
+    <section class="content">
+        <h1>Tasks to Earn REBL Coins</h1>
+        <div class="task">
+            <h2>Social Media Task 1</h2>
+            <p>Share our post on Instagram and tag us to earn 5 REBL Coins!</p>
+            <button class="neon-button" onclick="claimReward(5)">Claim Reward</button>
+        </div>
+        <div class="task">
+            <h2>Social Media Task 2</h2>
+            <p>Tweet about REBL Coin and mention us to earn 5 REBL Coins!</p>
+            <button class="neon-button" onclick="claimReward(5)">Claim Reward</button>
+        </div>
+        <div class="task">
+            <h2>Referral Task</h2>
+            <p>Refer a friend to sign up and earn 10 REBL Coins!</p>
+            <button class="neon-button" onclick="claimReward(10)">Claim Reward</button>
+        </div>
+        <div class="task">
+            <h2>Review Task</h2>
+            <p>Leave a review on our website to earn 3 REBL Coins!</p>
+            <button class="neon-button" onclick="claimReward(3)">Claim Reward</button>
+        </div>
+        <!-- Add more tasks here -->
+    </section>
+
+    <script>
+        function claimReward(amount) {
+            alert(`You've claimed ${amount} REBL Coins!`);
+            // Here, you can add code to update the user's coin balance in the backend
+        }
+    </script>
+</body>
+</html>

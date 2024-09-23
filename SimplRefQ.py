@@ -1,123 +1,128 @@
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
+import pymongo
+from pymongo import MongoClient
+from dotenv import load_dotenv
 import os
 import logging
-from dotenv import load_dotenv
-from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes
-import motor.motor_asyncio
-import uuid
 
-# Load environment variables
-load_dotenv()
-
-BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-MONGO_URI = os.getenv("MONGO_URI")
-
-if not BOT_TOKEN or not MONGO_URI:
-    raise ValueError("Bot token or MongoDB URI not found in .env file.")
-
-# Configure logging
+# Set up logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-logger = logging.getLogger(__name__)
 
-# MongoDB setup
-client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
-db = client.simpl_bot
-users_collection = db.users
+# Load environment variables from .env file
+load_dotenv()
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+
+if TELEGRAM_BOT_TOKEN is None:
+    logging.error("No token found. Please check your .env file.")
+    exit(1)
+
+# MongoDB connection
+try:
+    client = MongoClient('mongodb+srv://adesidaadebola1:Pheonix148%24%24@cluster0.xew48.mongodb.net/Cluster0?retryWrites=true&w=majority')
+    db = client['Cluster0']
+    users_collection = db['users']
+except Exception as e:
+    logging.error(f"Failed to connect to MongoDB: {e}")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user = update.effective_user
-    referral_code = str(uuid.uuid4())[:8]
-    
-    existing_user = await users_collection.find_one({"telegram_id": user.id})
-    
-    if existing_user:
-        await update.message.reply_text(f"Welcome back, {user.first_name}! Your referral code is: {existing_user['referral_code']}")
+    try:
+        chat_id = update.effective_chat.id
+        reply_markup = InlineKeyboardMarkup([
+            [InlineKeyboardButton("Begin Your Journey", callback_data='begin_journey')],
+            [InlineKeyboardButton("Invite Friends", callback_data='invite_friends')],
+            [InlineKeyboardButton("Leaderboard", callback_data='leaderboard')],
+            [InlineKeyboardButton("Balance", callback_data='balance')],
+            [InlineKeyboardButton("Wallet", callback_data='wallet')],
+            [InlineKeyboardButton("Ranking", callback_data='ranking')]
+        ])
+        await context.bot.send_message(chat_id=chat_id, text="Welcome to the bot! Choose an option:", reply_markup=reply_markup)
+    except AttributeError as e:
+        logging.error(f"Error in start handler: {e}")
+
+async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()  # Acknowledge the callback query
+
+    if query.data == 'begin_journey':
+        await begin_journey(update, context)
+    elif query.data == 'invite_friends':
+        await invite_friends(update, context)
+    elif query.data == 'leaderboard':
+        await leaderboard(update, context)
+    elif query.data == 'balance':
+        await balance(update, context)
+    elif query.data == 'wallet':
+        await wallet(update, context)
+    elif query.data == 'ranking':
+        await ranking(update, context)
     else:
-        new_user = {
-            "telegram_id": user.id,
-            "referral_code": referral_code,
-            "points": 0,
-            "referrer_id": None
-        }
-        await users_collection.insert_one(new_user)
-        await update.message.reply_text(f"Welcome, {user.first_name}! Your unique referral code is: {referral_code}")
+        await query.message.reply_text("Unknown action.")
 
-async def my_referrals(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user = update.effective_user
-    
-    user_data = await users_collection.find_one({"telegram_id": user.id})
-    if not user_data:
-        await update.message.reply_text("You haven't registered yet. Use /start to register.")
-        return
+async def begin_journey(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    # This function will be implemented to open the mini-app
+    await update.callback_query.message.reply_text("The journey begins! (Mini-app integration pending)")
 
-    user_points = user_data['points']
-    direct_referrals = await users_collection.count_documents({"referrer_id": user.id})
-    
-    pipeline = [
-        {"$match": {"referrer_id": user.id}},
-        {"$lookup": {
-            "from": "users",
-            "localField": "telegram_id",
-            "foreignField": "referrer_id",
-            "as": "indirect_referrals"
-        }},
-        {"$project": {"indirect_count": {"$size": "$indirect_referrals"}}}
-    ]
-    indirect_referrals = sum([doc['indirect_count'] async for doc in users_collection.aggregate(pipeline)])
-    
-    await update.message.reply_text(f"Your Simpl Points: {user_points}\n"
-                                    f"Direct Referrals: {direct_referrals}\n"
-                                    f"Indirect Referrals: {indirect_referrals}")
+async def invite_friends(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user = update.callback_query.from_user
+    username = user.username or user.id
+    referral_link = f"https://t.me/SimplQ_bot?start={username}"
+    await update.callback_query.message.reply_text(f"Share this link with your friends: {referral_link}")
 
-async def refer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user = update.effective_user
-    if not context.args:
-        await update.message.reply_text("Please provide a referral code.")
-        return
-    
-    referral_code = context.args[0]
-    referrer = await users_collection.find_one({"referral_code": referral_code})
-    
-    if not referrer:
-        await update.message.reply_text("Invalid referral code.")
-        return
-    
-    referrer_id = referrer['telegram_id']
-    user_data = await users_collection.find_one({"telegram_id": user.id})
-    
-    if user_data['referrer_id']:
-        await update.message.reply_text("You've already been referred.")
-        return
-    
-    await users_collection.update_one(
-        {"telegram_id": user.id},
-        {"$set": {"referrer_id": referrer_id}}
-    )
-    
-    referral_count = await users_collection.count_documents({"referrer_id": referrer_id})
-    
-    if referral_count <= 100:
-        await users_collection.update_one(
-            {"telegram_id": referrer_id},
-            {"$inc": {"points": 10}}
-        )
-        await update.message.reply_text("Referral successful! The referrer has been awarded 10 Simpl Points.")
-    else:
-        await update.message.reply_text("Referral successful, but the referrer has reached the maximum referral limit.")
+async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    try:
+        top_users = users_collection.find().sort("score", pymongo.DESCENDING).limit(10)
+        leaderboard_text = "🏆 Leaderboard 🏆\n\n"
+        for i, user in enumerate(top_users, 1):
+            leaderboard_text += f"{i}. {user.get('username', 'Anonymous')}: {user.get('score', 0)} points\n"
+        await update.callback_query.message.reply_text(leaderboard_text)
+    except Exception as e:
+        logging.error(f"Error retrieving leaderboard: {e}")
+        await update.callback_query.message.reply_text("Error retrieving leaderboard data.")
 
-async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    logger.error(f"Update {update} caused error {context.error}")
+async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.callback_query.from_user.id
+    try:
+        user_data = users_collection.find_one({"user_id": user_id})
+        if user_data:
+            await update.callback_query.message.reply_text(f"Your current balance: {user_data.get('balance', '0')} $REBLCOINS")
+        else:
+            await update.callback_query.message.reply_text("No balance data found.")
+    except Exception as e:
+        logging.error(f"Error retrieving balance: {e}")
+        await update.callback_query.message.reply_text("Error retrieving balance data.")
 
-def main() -> None:
-    application = Application.builder().token(BOT_TOKEN).build()
+async def ranking(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.callback_query.from_user.id
+    try:
+        user_data = users_collection.find_one({"user_id": user_id})
+        if user_data:
+            await update.callback_query.message.reply_text(f"Your ranking: {user_data.get('rank', 'N/A')}")
+        else:
+            await update.callback_query.message.reply_text("No ranking data found.")
+    except Exception as e:
+        logging.error(f"Error retrieving ranking: {e}")
+        await update.callback_query.message.reply_text("Error retrieving ranking data.")
 
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("my_referrals", my_referrals))
-    application.add_handler(CommandHandler("refer", refer))
-
-    application.add_error_handler(error_handler)
-
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
+async def wallet(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.callback_query.from_user.id
+    try:
+        user_data = users_collection.find_one({"user_id": user_id})
+        if user_data:
+            await update.callback_query.message.reply_text(f"Your wallet balance: {user_data.get('balance', '0')} $REBLCOINS")
+        else:
+            await update.callback_query.message.reply_text("No wallet data found.")
+    except Exception as e:
+        logging.error(f"Error retrieving wallet data: {e}")
+        await update.callback_query.message.reply_text("Error retrieving wallet data.")
 
 if __name__ == '__main__':
-    main()
+    application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
+
+    application.add_handler(CommandHandler('start', start))
+    application.add_handler(CallbackQueryHandler(button))
+
+    # Increase timeout
+    application.bot.request.timeout = 30  # Set timeout to 30 seconds
+
+    application.run_polling()

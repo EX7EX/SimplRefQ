@@ -1,0 +1,231 @@
+h1 {
+    color: #ff0099;
+    font-size: 3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #ff0099, 0 0 20px #ff00ff; /* Adjust shadows as needed */
+}
+
+.content {
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    justify-content: center; /* Center contents */
+    align-items: center; /* Center horizontally */
+    width: 100%; /* Full width */
+    padding: 20px; /* Add padding */
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Navigation Bar */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: #1a1a1a;
+    padding: 10px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+nav ul li a:hover {
+    border: 1px solid #ff00ff;
+    color: #ff00ff;
+}
+
+/* Main Heading */
+h1 {
+    color: #ff0099;
+    font-size: 3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #ff0099;
+}
+
+/* Neon Button */
+.neon-button {
+    background-color: transparent;
+    border: 2px solid #00ff99;
+    color: #00ff99;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    cursor: pointer;
+    position: relative;
+    margin: 20px;
+    transition: all 0.2s ease-in-out;
+    text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff00; /* Adjust shadows as needed */
+}
+}
+
+.neon-button:before, .neon-button:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.neon-button:before {
+    border: 2px solid #ff00ff;
+    transform: scale(1.2);
+}
+
+.neon-button:hover:before {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 20px #ff00ff;
+}
+
+.neon-button:after {
+    border: 2px solid #00ff99;
+    transform: scale(1.2);
+}
+
+.neon-button:hover:after {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 20px #00ff99;
+}
+
+/* Content Section */
+.content p {
+    font-size: 1.2em;
+    color: #cccccc;
+}
+
+/* Background Animation */
+.glitch-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('cyberpunk-background.jpg'), url('bokeh_PNG12.png'); /* Add the bokeh overlay */
+    background-size: cover, cover; /* Adjust as needed */
+    background-attachment: fixed;
+    background-blend-mode: color-burn;
+    z-index: -1;
+    animation: glitch 5s infinite;
+}
+
+/* Optional: Adjust bokeh opacity */
+.bokeh-overlay {
+    opacity: 0; /* Adjust for desired effect */
+}
+
+
+
+/* Glitch Effect */
+@keyframes glitch {
+    0% { transform: translate(0, 0); opacity: 1; }
+    10% { transform: translate(-2px, -2px); opacity: 0.8; }
+    20% { transform: translate(2px, 2px); opacity: 1; }
+    30% { transform: translate(-1px, 1px); opacity: 0.9; }
+    100% { transform: translate(0, 0); opacity: 1; }
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    .neon-button {
+        width: 100%;
+    }
+}
+
+/* Modal Container */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Close Button */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Tasks Section */
+.task {
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.task h2 {
+    color: #ff0099;
+    margin-bottom: 10px;
+}
+
+.task p {
+    color: #cccccc;
+    margin-bottom: 15px;
+}
