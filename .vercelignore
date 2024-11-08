@@ -1,0 +1,6 @@
+# Ignore bot files and directories not needed for web hosting
+SimplRefQ.py
+requirements.txt
+.env
+simpl.db
+/Users/mac/Documents/WORKSPACE/bots/simpl referrals/SimplRefQ.py

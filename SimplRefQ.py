@@ -18,6 +18,9 @@ if TELEGRAM_BOT_TOKEN is None:
     exit(1)
 
 # MongoDB connection
+MONGO_URI = os.getenv('MONGO_URI')
+client = MongoClient(MONGO_URI)
+
 try:
     client = MongoClient('mongodb+srv://adesidaadebola1:Pheonix148%24%24@cluster0.xew48.mongodb.net/Cluster0?retryWrites=true&w=majority')
     db = client['Cluster0']
