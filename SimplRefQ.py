@@ -12,44 +12,90 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 # Load environment variables from .env file
 load_dotenv()
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+MONGO_URI = os.getenv('MONGO_URI')
 
 if TELEGRAM_BOT_TOKEN is None:
     logging.error("No token found. Please check your .env file.")
     exit(1)
 
 # MongoDB connection
-MONGO_URI = os.getenv('MONGO_URI')
-client = MongoClient(MONGO_URI)
-
 try:
-    client = MongoClient('mongodb+srv://adesidaadebola1:Pheonix148%24%24@cluster0.xew48.mongodb.net/Cluster0?retryWrites=true&w=majority')
+    client = MongoClient(MONGO_URI)
     db = client['Cluster0']
     users_collection = db['users']
+    transactions_collection = db['transactions']
+    rankings_collection = db['rankings']
+    channel_members_collection = db['channel_members']
 except Exception as e:
     logging.error(f"Failed to connect to MongoDB: {e}")
+    exit(1)
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=20000)
+    client.server_info()  # Forces connection on a call to server_info
+    db = client['Cluster0']
+    logging.info("Connected to MongoDB successfully.")
+except pymongo.errors.ServerSelectionTimeoutError as e:
+    logging.error(f"Failed to connect to MongoDB: {e}")
+    exit(1)
+
+# Helper function: Check if user joined the channel
+async def has_joined_channel(context: ContextTypes.DEFAULT_TYPE, user_id: int) -> bool:
     try:
-        chat_id = update.effective_chat.id
-        reply_markup = InlineKeyboardMarkup([
-            [InlineKeyboardButton("Begin Your Journey", callback_data='begin_journey')],
-            [InlineKeyboardButton("Invite Friends", callback_data='invite_friends')],
-            [InlineKeyboardButton("Leaderboard", callback_data='leaderboard')],
-            [InlineKeyboardButton("Balance", callback_data='balance')],
-            [InlineKeyboardButton("Wallet", callback_data='wallet')],
-            [InlineKeyboardButton("Ranking", callback_data='ranking')]
-        ])
-        await context.bot.send_message(chat_id=chat_id, text="Welcome to the bot! Choose an option:", reply_markup=reply_markup)
-    except AttributeError as e:
-        logging.error(f"Error in start handler: {e}")
+        member = await context.bot.get_chat_member(chat_id="@simplco", user_id=user_id)
+        return member.status in ['member', 'administrator', 'creator']
+    except Exception as e:
+        logging.warning(f"Error checking channel membership for user {user_id}: {e}")
+        return False
 
+# Start Command
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.effective_user.id
+    username = update.effective_user.username or "Anonymous"
+
+    # Check if user has joined the required channel
+    if not await has_joined_channel(context, user_id):
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text="You must join @simplco to unlock full bot features.",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Join Channel", url="https://t.me/simplco")]
+            ])
+        )
+        return
+
+    # Add user to database if not already present
+    if not users_collection.find_one({"user_id": user_id}):
+        users_collection.insert_one({
+            "user_id": user_id,
+            "username": username,
+            "balance": 0,
+            "wallet": 0,
+            "rank": None,
+            "joined_channel": True
+        })
+
+    # Show main menu
+    reply_markup = InlineKeyboardMarkup([
+        [InlineKeyboardButton("Launch Mini App", url="t.me/SimplQ_bot/rebltasks")],
+        [InlineKeyboardButton("Invite Friends", callback_data='invite_friends')],
+        [InlineKeyboardButton("Leaderboard", callback_data='leaderboard')],
+        [InlineKeyboardButton("Balance", callback_data='balance')],
+        [InlineKeyboardButton("Wallet", callback_data='wallet')],
+        [InlineKeyboardButton("Ranking", callback_data='ranking')]
+    ])
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="Welcome to the bot! Choose an option:",
+        reply_markup=reply_markup
+    )
+
+# Button Handler
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()  # Acknowledge the callback query
 
-    if query.data == 'begin_journey':
-        await begin_journey(update, context)
-    elif query.data == 'invite_friends':
+    if query.data == 'invite_friends':
         await invite_friends(update, context)
     elif query.data == 'leaderboard':
         await leaderboard(update, context)
@@ -62,16 +108,14 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     else:
         await query.message.reply_text("Unknown action.")
 
-async def begin_journey(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    # This function will be implemented to open the mini-app
-    await update.callback_query.message.reply_text("The journey begins! (Mini-app integration pending)")
-
+# Invite Friends
 async def invite_friends(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.callback_query.from_user
     username = user.username or user.id
     referral_link = f"https://t.me/SimplQ_bot?start={username}"
     await update.callback_query.message.reply_text(f"Share this link with your friends: {referral_link}")
 
+# Leaderboard
 async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
         top_users = users_collection.find().sort("score", pymongo.DESCENDING).limit(10)
@@ -83,22 +127,37 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         logging.error(f"Error retrieving leaderboard: {e}")
         await update.callback_query.message.reply_text("Error retrieving leaderboard data.")
 
+# Balance
 async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.callback_query.from_user.id
     try:
         user_data = users_collection.find_one({"user_id": user_id})
         if user_data:
-            await update.callback_query.message.reply_text(f"Your current balance: {user_data.get('balance', '0')} $REBLCOINS")
+            await update.callback_query.message.reply_text(f"Your current balance: {user_data.get('balance', 0)} $REBLCOINS")
         else:
             await update.callback_query.message.reply_text("No balance data found.")
     except Exception as e:
         logging.error(f"Error retrieving balance: {e}")
         await update.callback_query.message.reply_text("Error retrieving balance data.")
 
-async def ranking(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+# Wallet
+async def wallet(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.callback_query.from_user.id
     try:
         user_data = users_collection.find_one({"user_id": user_id})
+        if user_data:
+            await update.callback_query.message.reply_text(f"Your wallet balance: {user_data.get('wallet', 0)} $REBLCOINS")
+        else:
+            await update.callback_query.message.reply_text("No wallet data found.")
+    except Exception as e:
+        logging.error(f"Error retrieving wallet data: {e}")
+        await update.callback_query.message.reply_text("Error retrieving wallet data.")
+
+# Ranking
+async def ranking(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    user_id = update.callback_query.from_user.id
+    try:
+        user_data = rankings_collection.find_one({"user_id": user_id})
         if user_data:
             await update.callback_query.message.reply_text(f"Your ranking: {user_data.get('rank', 'N/A')}")
         else:
@@ -107,25 +166,10 @@ async def ranking(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logging.error(f"Error retrieving ranking: {e}")
         await update.callback_query.message.reply_text("Error retrieving ranking data.")
 
-async def wallet(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user_id = update.callback_query.from_user.id
-    try:
-        user_data = users_collection.find_one({"user_id": user_id})
-        if user_data:
-            await update.callback_query.message.reply_text(f"Your wallet balance: {user_data.get('balance', '0')} $REBLCOINS")
-        else:
-            await update.callback_query.message.reply_text("No wallet data found.")
-    except Exception as e:
-        logging.error(f"Error retrieving wallet data: {e}")
-        await update.callback_query.message.reply_text("Error retrieving wallet data.")
-
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
 
     application.add_handler(CommandHandler('start', start))
     application.add_handler(CallbackQueryHandler(button))
-
-    # Increase timeout
-    application.bot.request.timeout = 30  # Set timeout to 30 seconds
 
     application.run_polling()

@@ -12,6 +12,13 @@ body {
     color: #ffffff;
     font-size: 16px;
     line-height: 1.6;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #f4f4f4;
+    color: #0d0d0d;
 }
 
 /* Container */
@@ -41,7 +48,7 @@ nav ul li a {
     transition: all 0.2s ease-in-out;
 }
 
-nav ul li a:hover {
+nav ul li a:hover, nav ul li a.active {
     border: 1px solid #ff00ff;
     color: #ff00ff;
 }
@@ -133,7 +140,6 @@ h1 {
     animation: glitch 5s infinite;
 }
 
-/* Optional: Adjust bokeh opacity */
 .bokeh-overlay {
     opacity: 0.5;
 }
@@ -199,4 +205,21 @@ h1 {
 .task p {
     color: #cccccc;
     margin-bottom: 15px;
+}
+
+/* Game Grid */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1em;
+}
+
+.game-item img {
+    width: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.game-item:hover img {
+    transform: scale(1.1);
 }

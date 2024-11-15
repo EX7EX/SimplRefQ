@@ -7,65 +7,71 @@
     <link rel="stylesheet" href="/mini-app/styles.css">
 </head>
 <body>
-    <!-- Glitch Background -->
-    <div class="glitch-background"></div>
+    <!-- Dynamic Glitch Background -->
+    <div class="glitch-background">
+        <div class="layer"></div>
+        <div class="layer"></div>
+        <div class="layer"></div>
+    </div>
 
-    <!-- Navigation -->
+    <!-- Navigation with Active Highlight -->
     <nav>
         <ul>
-            <li><a href="/mini-app/index.html">Home</a></li>
+            <li><a href="/mini-app/index.html" class="active">Home</a></li>
             <li><a href="/mini-app/shop.html">Shop</a></li>
             <li><a href="/mini-app/leaderboard.html">Leaderboard</a></li>
             <li><a href="/mini-app/games.html">Mini-Games</a></li>
             <li><a href="/mini-app/tasks.html">Tasks</a></li>
         </ul>
+        <button id="toggle-dark-mode">Toggle Dark/Light Mode</button>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Main Content with Dynamic Sections -->
     <section class="content">
         <h1>Welcome to REBL Coin</h1>
-        <p>Your current balance: <strong>1 REBL Coin</strong></p>
-        <button class="neon-button">Claim Daily Reward</button>
-        <button class="neon-button">View Leaderboard</button>
-        <button class="neon-button">Play Mini-Games</button>
+        <p>Your current balance: <strong id="coin-balance">1 REBL Coin</strong></p>
+        <button class="neon-button" id="daily-reward">Claim Daily Reward</button>
+        <button class="neon-button" id="view-leaderboard">View Leaderboard</button>
+        <button class="neon-button" id="play-mini-games">Play Mini-Games</button>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <p>Next Milestone: Complete <span id="tasks-completed">0</span>/5 tasks</p>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%;"></div>
+            </div>
+        </div>
     </section>
 
-    <!-- Hidden Blog Modal -->
+    <!-- Easter Egg Modal -->
     <div id="hiddenBlogModal" class="modal" style="display:none;">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <p>Welcome to finance shotgunning</p>
+            <p>You’ve unlocked a hidden piece of lore!</p>
         </div>
     </div>
 
+    <!-- Game Previews Section -->
+    <section id="game-previews">
+        <h2>Featured Mini-Games</h2>
+        <div class="game-grid">
+            <div class="game-item">
+                <img src="/mini-app/images/game1.png" alt="Game 1">
+                <p>Space Glitch - Collect 10 REBL Coins!</p>
+                <button class="neon-button">Play Now</button>
+            </div>
+            <div class="game-item">
+                <img src="/mini-app/images/game2.png" alt="Game 2">
+                <p>Time Hoppers - Beat the clock!</p>
+                <button class="neon-button">Play Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Background Toggle -->
     <script>
-        // Easter Egg Blog Reveal
-        document.addEventListener('DOMContentLoaded', function() {
-            let clickCount = 0;
-            const buttons = document.querySelectorAll('.neon-button');
-            const modal = document.getElementById('hiddenBlogModal');
-            const closeButton = document.querySelector('.close-button');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    clickCount++;
-                    if (clickCount === 10) {
-                        modal.style.display = 'block'; // Show modal
-                    }
-                });
-            });
-
-            // Close modal functionality
-            closeButton.addEventListener('click', () => {
-                modal.style.display = 'none'; // Hide modal
-            });
-
-            // Close modal if clicked outside of it
-            window.addEventListener('click', (event) => {
-                if (event.target === modal) {
-                    modal.style.display = 'none'; // Hide modal
-                }
-            });
+        document.getElementById('toggle-dark-mode').addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
         });
     </script>
 </body>
