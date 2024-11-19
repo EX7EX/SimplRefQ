@@ -68,24 +68,97 @@ h1 {
     text-shadow: 0 0 10px #ff0099, 0 0 20px #ff00ff;
 }
 
-/* Neon Button */
+/* Neon Button with Depth Effect */
 .neon-button {
-    background-color: transparent;
+    position: relative;
+    background-color: #000000;
     border: 2px solid #00ff99;
     color: #00ff99;
-    padding: 10px 25px;
+    padding: 15px 30px;
     text-transform: uppercase;
-    font-size: 1em;
+    font-size: 1.2em;
     cursor: pointer;
-    margin: 10px;
-    position: relative;
+    margin: 20px;
+    border-radius: 10px;
     transition: all 0.2s ease-in-out;
     text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff00;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.neon-button::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(145deg, #1a1a1a, #000000);
+    border-radius: 10px;
+    z-index: -1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .neon-button:hover {
-    box-shadow: 0 0 20px #00ff99, 0 0 30px #ff00ff;
-    transform: scale(1.05);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.6), 0 0 20px #00ff99;
+}
+
+.neon-button:hover::before {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* CSS Icons */
+.icon-home {
+    width: 40px;
+    height: 40px;
+    background-color: #00ff99;
+    clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+    margin: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-home:hover {
+    transform: scale(1.1);
+    background-color: #ff00ff;
+}
+
+.icon-user {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #00ff99;
+    border-radius: 50%;
+    margin: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-user::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 20%;
+    background-color: #00ff99;
+    border-radius: 50%;
+}
+
+.icon-gear {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #00ff99;
+    clip-path: polygon(
+        50% 0%, 60% 30%, 100% 50%, 60% 70%, 50% 100%, 40% 70%, 0% 50%, 40% 30%
+    );
+    margin: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-gear:hover {
+    transform: rotate(20deg) scale(1.1);
+    background-color: #ff00ff;
 }
 
 /* Content Section */
