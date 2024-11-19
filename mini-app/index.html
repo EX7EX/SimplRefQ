@@ -6,47 +6,8 @@
     <title>REBL Coin - Home</title>
     <link rel="stylesheet" href="/mini-app/styles.css">
     <style>
-        /* Glossy REBL Card Styling */
-        .balance-card {
-            max-width: 300px;
-            margin: 20px auto;
-            background: linear-gradient(145deg, #000000, #333333);
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-family: Arial, sans-serif;
-        }
-        .balance-card h2 {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-        .balance-card p {
-            margin: 5px 0;
-        }
-        .balance-card button {
-            background-color: #1e90ff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin-top: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-        .balance-card button:hover {
-            background-color: #007acc;
-        }
-
         /* Action Buttons Styling */
-        .action-buttons {
-            display: flex;
-            justify-content: space-evenly;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-        .action-buttons .neon-button {
+        .neon-button {
             padding: 10px 20px;
             margin: 10px;
             border-radius: 8px;
@@ -56,20 +17,39 @@
             color: white;
             border: none;
             box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
-        .action-buttons .neon-button:hover {
+        .neon-button:hover {
             background-color: #cc0066;
         }
 
-        /* General Responsiveness */
-        .content {
-            padding: 20px;
+        /* Game Grid */
+        .game-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
-        .welcome-section h1 {
-            text-align: left;
-            margin: 10px 0;
-            font-size: 2rem;
+        .game-item {
+            width: 300px;
+            text-align: center;
+            background: linear-gradient(145deg, #000000, #333333);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
             color: white;
+            font-family: Arial, sans-serif;
+        }
+        .game-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .game-item p {
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -124,23 +104,25 @@
                 <div class="progress-fill" style="width: 0%;"></div>
             </div>
         </div>
-    </section>
 
-    <!-- Game Previews Section -->
-    <section id="game-previews">
-        <h2>Featured Mini-Games</h2>
-        <div class="game-grid">
-            <div class="game-item">
-                <img src="/mini-app/images/game1.png" alt="Game 1">
-                <p>Space Glitch - Collect 10 REBL Coins!</p>
-                <button class="neon-button">Play Now</button>
+        <!-- Game Previews Section -->
+        <section id="game-previews">
+            <h2>Featured Mini-Games</h2>
+            <div class="game-grid">
+                <!-- Game 1 -->
+                <div class="game-item">
+                    <img src="https://telegram.org/img/t_logo.png" alt="Here Wallet Game">
+                    <p><strong>Here Wallet Bot:</strong> Build your crypto wallet and compete for rewards in this interactive game!</p>
+                    <a class="neon-button" href="https://t.me/herewalletbot/app?startapp=8272142" target="_blank">Play Now</a>
+                </div>
+                <!-- Game 2 -->
+                <div class="game-item">
+                    <img src="https://telegram.org/img/t_logo.png" alt="PocketFi Game">
+                    <p><strong>PocketFi Bot:</strong> Start mining and manage resources to maximize rewards and boost your portfolio!</p>
+                    <a class="neon-button" href="https://t.me/pocketfi_bot/Mining?startapp=5233920075" target="_blank">Play Now</a>
+                </div>
             </div>
-            <div class="game-item">
-                <img src="/mini-app/images/game2.png" alt="Game 2">
-                <p>Time Hoppers - Beat the clock!</p>
-                <button class="neon-button">Play Now</button>
-            </div>
-        </div>
+        </section>
     </section>
 
     <!-- Easter Egg Modal -->
