@@ -5,6 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REBL Coin - Home</title>
     <link rel="stylesheet" href="/mini-app/styles.css">
+    <style>
+        /* Glossy REBL Card Styling */
+        .balance-card {
+            max-width: 300px;
+            margin: 20px auto;
+            background: linear-gradient(145deg, #000000, #333333);
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .balance-card h2 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+        .balance-card p {
+            margin: 5px 0;
+        }
+        .balance-card button {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .balance-card button:hover {
+            background-color: #007acc;
+        }
+
+        /* Action Buttons Styling */
+        .action-buttons {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .action-buttons .neon-button {
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #ff007f;
+            color: white;
+            border: none;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+        }
+        .action-buttons .neon-button:hover {
+            background-color: #cc0066;
+        }
+
+        /* General Responsiveness */
+        .content {
+            padding: 20px;
+        }
+        .welcome-section h1 {
+            text-align: left;
+            margin: 10px 0;
+            font-size: 2rem;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <!-- Dynamic Glitch Background -->
@@ -39,7 +106,7 @@
                 <h2>REBL Card</h2>
                 <p><strong>Balance:</strong> <span id="coin-balance">1 REBL Coin</span></p>
                 <p><strong>Tasks Completed:</strong> <span id="tasks-completed">0</span></p>
-    
+                <button>Connect Wallet</button>
             </div>
         </div>
 
@@ -48,7 +115,6 @@
             <button class="neon-button" id="daily-reward">Claim Daily Reward</button>
             <button class="neon-button" id="view-leaderboard">View Leaderboard</button>
             <button class="neon-button" id="play-mini-games">Play Mini-Games</button>
-            <button class="neon-button">Connect Wallet</button>
         </div>
 
         <!-- Progress Tracker -->
