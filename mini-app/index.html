@@ -26,13 +26,29 @@
         <button id="toggle-dark-mode">Toggle Dark/Light Mode</button>
     </nav>
 
-    <!-- Main Content with Dynamic Sections -->
+    <!-- Main Content -->
     <section class="content">
-        <h1>Welcome to REBL Coin</h1>
-        <p>Your current balance: <strong id="coin-balance">1 REBL Coin</strong></p>
-        <button class="neon-button" id="daily-reward">Claim Daily Reward</button>
-        <button class="neon-button" id="view-leaderboard">View Leaderboard</button>
-        <button class="neon-button" id="play-mini-games">Play Mini-Games</button>
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome to REBL Coin</h1>
+        </div>
+
+        <!-- Balance Card -->
+        <div class="balance-card">
+            <div class="card-content">
+                <h2>REBL Card</h2>
+                <p><strong>Balance:</strong> <span id="coin-balance">1 REBL Coin</span></p>
+                <p><strong>Tasks Completed:</strong> <span id="tasks-completed">0</span></p>
+                <button class="neon-button">Connect Wallet</button>
+            </div>
+        </div>
+
+        <!-- Buttons for Actions -->
+        <div class="action-buttons">
+            <button class="neon-button" id="daily-reward">Claim Daily Reward</button>
+            <button class="neon-button" id="view-leaderboard">View Leaderboard</button>
+            <button class="neon-button" id="play-mini-games">Play Mini-Games</button>
+        </div>
 
         <!-- Progress Tracker -->
         <div class="progress-tracker">
@@ -42,14 +58,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Easter Egg Modal -->
-    <div id="hiddenBlogModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <p>You’ve unlocked a hidden piece of lore!</p>
-        </div>
-    </div>
 
     <!-- Game Previews Section -->
     <section id="game-previews">
@@ -67,6 +75,14 @@
             </div>
         </div>
     </section>
+
+    <!-- Easter Egg Modal -->
+    <div id="hiddenBlogModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p>You’ve unlocked a hidden piece of lore!</p>
+        </div>
+    </div>
 
     <!-- Dynamic Background Toggle -->
     <script>
