@@ -223,3 +223,27 @@ h1 {
 .game-item:hover img {
     transform: scale(1.1);
 }
+
+/* Updated Styles for New Features */
+
+/* iPhone 14 & 15 Pro */
+body.iphone-pro {
+    position: relative;
+    width: 393px;
+    height: 852px;
+    background: #F5F5F5;
+}
+
+/* Blur Overlay */
+.blur-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(80px);
+}
+
+/* Buttons, Text, and Other Elements */
+.ellipse-1, .rewards-box, .daily-reward {
+    /* Placeholder styles for components */
+}
