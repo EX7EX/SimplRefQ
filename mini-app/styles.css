@@ -161,6 +161,71 @@ h1 {
     background-color: #ff00ff;
 }
 
+/* Balance Card Styles */
+.balance-card {
+    background: linear-gradient(145deg, #000000, #1e1e1e);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
+    color: white;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.balance-card::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #007bff, #00aaff);
+    z-index: -1;
+    border-radius: 14px;
+}
+
+.blue-button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+}
+
+.blue-button:hover {
+    background-color: #0056b3;
+}
+
+/* Fix Leaderboard Overlap */
+nav ul li {
+    white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+    nav ul {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+
+/* Cascading Text Fix */
+.game-item-content p {
+    word-wrap: break-word;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+h1, h2, h3, p {
+    overflow-wrap: break-word;
+}
+
+
 /* Content Section */
 .content {
     display: flex;
