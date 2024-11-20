@@ -65,6 +65,8 @@ h1 {
     font-size: 2em;
     text-transform: uppercase;
     margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
     text-shadow: 
       0 0 10px #ff0099,
       0 0 20px #ff00ff,
