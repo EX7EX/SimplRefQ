@@ -62,7 +62,7 @@ nav ul li a:hover, nav ul li a.active {
 /* Main Heading */
 h1 {
     color: #9a005dce;
-    font-size: 2.5em;
+    font-size: 2.2em;
     text-transform: uppercase;
     margin-bottom: 20px;
     text-shadow: 
@@ -71,7 +71,11 @@ h1 {
       0 0 5px rgba(0, 0, 0, 0.5);
     -webkit-text-stroke: 2px #333;
     text-stroke: 2px #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+  
   
 
 /* Neon Button with Depth Effect */
