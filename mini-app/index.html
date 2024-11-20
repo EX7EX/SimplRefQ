@@ -6,10 +6,16 @@
     <title>REBL Coin - Home</title>
     <link rel="stylesheet" href="/mini-app/styles.css">
     <style>
-        /* Action Buttons Styling */
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         .neon-button {
             padding: 10px 20px;
-            margin: 10px;
+            margin: 10px 0;
             border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
@@ -25,31 +31,48 @@
             background-color: #cc0066;
         }
 
-        /* Game Grid */
+        /* Game Section Styles */
         .game-grid {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             gap: 20px;
-            flex-wrap: wrap;
+            max-width: 100%;
+            padding: 10px;
         }
         .game-item {
-            width: 300px;
-            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
             background: linear-gradient(145deg, #000000, #333333);
             border-radius: 12px;
             padding: 15px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
             color: white;
-            font-family: Arial, sans-serif;
+            gap: 15px;
         }
         .game-item img {
-            width: 100%;
-            height: auto;
+            max-width: 100px;
+            max-height: 100px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-right: 10px;
         }
-        .game-item p {
-            margin: 10px 0;
+        .game-item-content {
+            flex: 1;
+        }
+        .game-item-content p {
+            margin: 5px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .game-item img {
+                max-width: 100%;
+                margin: 0 0 10px 0;
+            }
         }
     </style>
 </head>
@@ -61,7 +84,7 @@
         <div class="layer"></div>
     </div>
 
-    <!-- Navigation with Active Highlight -->
+    <!-- Navigation -->
     <nav>
         <ul>
             <li><a href="/mini-app/index.html" class="active">Home</a></li>
@@ -75,65 +98,27 @@
 
     <!-- Main Content -->
     <section class="content">
-        <!-- Welcome Section -->
-        <div class="welcome-section">
-            <h1>Welcome to REBL Tasks</h1>
-        </div>
-
-        <!-- Balance Card -->
-        <div class="balance-card">
-            <div class="card-content">
-                <h2>REBL Card</h2>
-                <p><strong>Balance:</strong> <span id="coin-balance">1 REBL Coin</span></p>
-                <p><strong>Tasks Completed:</strong> <span id="tasks-completed">0</span></p>
-                <button>Connect Wallet</button>
-            </div>
-        </div>
-
-        <!-- Buttons for Actions -->
-        <div class="action-buttons">
-            <button class="neon-button" id="daily-reward">Claim Daily Reward</button>
-            <button class="neon-button" id="view-leaderboard">View Leaderboard</button>
-            <button class="neon-button" id="play-mini-games">Play Mini-Games</button>
-        </div>
-
-        <!-- Progress Tracker -->
-        <div class="progress-tracker">
-            <p>Next Milestone: Complete <span id="tasks-completed">0</span>/5 tasks</p>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 0%;"></div>
-            </div>
-        </div>
-
-        <!-- Game Previews Section -->
-        <section id="game-previews">
-            <h2>Featured Mini-Games</h2>
-            <div class="game-grid">
-                <!-- Game 1 -->
-                <div class="game-item">
-                    <img src="https://telegram.org/img/t_logo.png" alt="Here Wallet Game">
+        <h2>Featured Mini-Games</h2>
+        <div class="game-grid">
+            <!-- Game 1 -->
+            <div class="game-item">
+                <img src="https://telegram.org/img/t_logo.png" alt="Here Wallet Game">
+                <div class="game-item-content">
                     <p><strong>Here Wallet Bot:</strong> Build your crypto wallet and compete for rewards in this interactive game!</p>
                     <a class="neon-button" href="https://t.me/herewalletbot/app?startapp=8272142" target="_blank">Play Now</a>
                 </div>
-                <!-- Game 2 -->
-                <div class="game-item">
-                    <img src="https://telegram.org/img/t_logo.png" alt="PocketFi Game">
+            </div>
+            <!-- Game 2 -->
+            <div class="game-item">
+                <img src="https://telegram.org/img/t_logo.png" alt="PocketFi Game">
+                <div class="game-item-content">
                     <p><strong>PocketFi Bot:</strong> Start mining and manage resources to maximize rewards and boost your portfolio!</p>
                     <a class="neon-button" href="https://t.me/pocketfi_bot/Mining?startapp=5233920075" target="_blank">Play Now</a>
                 </div>
             </div>
-        </section>
+        </div>
     </section>
 
-    <!-- Easter Egg Modal -->
-    <div id="hiddenBlogModal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <p>You’ve unlocked a hidden piece of lore!</p>
-        </div>
-    </div>
-
-    <!-- Dynamic Background Toggle -->
     <script>
         document.getElementById('toggle-dark-mode').addEventListener('click', () => {
             document.body.classList.toggle('dark-mode');
