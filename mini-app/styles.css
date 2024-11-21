@@ -59,25 +59,35 @@ nav ul li a:hover, nav ul li a.active {
     color: #ff00ff;
 }
 
+
 /* Main Heading */
 h1 {
-    color: #9a005dce;
-    font-size: 2em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-    text-shadow: 
-      0 0 10px #ff0099,
-      0 0 20px #ff00ff,
-      0 0 5px rgba(0, 0, 0, 0.5);
-    -webkit-text-stroke: 2px #333;
-    text-stroke: 2px #333;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  color: #ffffff;
+  font-size: 2em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-shadow: 
+    0 0 10px #ff0099,
+    0 0 20px #ff00ff,
+    0 0 5px rgba(0, 0, 0, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.8);
+  -webkit-text-stroke: 2px #222;
+  text-stroke: 2px #222;
+  background: linear-gradient(90deg, #662d91, #ff99cc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.8em;
+    margin-left: 10px;
+    margin-right: 10px;
   }
-  
+}
+
   
 
 /* Neon Button with Depth Effect */
