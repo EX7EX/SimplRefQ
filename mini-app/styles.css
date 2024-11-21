@@ -63,14 +63,14 @@ nav ul li a:hover, nav ul li a.active {
 /* Main Heading */
 h1 {
   color: #ffffff;
-  font-size: 2em;
+  font-size: 2.3em;
   text-transform: uppercase;
   margin-bottom: 20px;
   margin-left: 20px;
   margin-right: 20px;
   text-shadow: 
-    0 0 10px #ff0099,
-    0 0 20px #ff00ff,
+    0 0 10px #3a68ff,
+    0 0 20px #3c00ff,
     0 0 5px rgba(0, 0, 0, 0.5),
     0 0 10px rgba(255, 255, 255, 0.8);
   -webkit-text-stroke: 2px #222;
