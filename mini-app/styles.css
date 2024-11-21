@@ -63,23 +63,23 @@ nav ul li a:hover, nav ul li a.active {
 /* Main Heading */
 h1 {
     color: #ffffff;
-    font-size: 3em; /* Larger size for more prominence */
-    font-family: 'Playfair Display', serif; /* Elegant, classic font for a luxury feel */
+    font-size: 3em; /* Slightly larger for better legibility */
+    font-family: 'Playfair Display', serif; /* Elegant font for a luxury feel */
     text-transform: uppercase;
     margin: 20px;
     text-align: center;
     text-shadow: 
-      0 0 15px rgba(255, 255, 255, 0.8), 
-      0 0 30px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #c21500, #ffc700); /* Rich, warm gradient for an expensive feel */
+      0 0 20px rgba(0, 0, 0, 0.6),  /* Darker, more prominent shadow for better contrast */
+      0 0 40px rgba(255, 255, 255, 0.5); /* Soft white glow for contrast */
+    background: linear-gradient(135deg, #c21500, #ffc700); /* Rich, warm gradient */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 2px; /* Slightly increased letter spacing for a more elegant touch */
-    text-transform: uppercase;
-    -webkit-text-stroke: 1px #222; /* Subtle outline */
-    text-stroke: 1px #222;
-    font-weight: 600; /* Bold to make the text stand out */
+    letter-spacing: 2px; /* Maintain elegance with slight letter spacing */
+    -webkit-text-stroke: 2px #222; /* Thicker outline for better visibility */
+    text-stroke: 2px #222;
+    font-weight: 600; /* Bold for prominence */
   }
+  
   
 @media only screen and (max-width: 768px) {
   h1 {
