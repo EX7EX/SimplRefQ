@@ -6,9 +6,11 @@
     <title>REBL Coin - Home</title>
     <link rel="stylesheet" href="/mini-app/styles.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap');
+
         /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Cinzel Decorative', cursive, sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -161,16 +163,15 @@
             <h1>Welcome to REBL Tasks</h1>
         </div>
 
-       <!-- Balance Card -->
-<div class="balance-card">
-    <div class="card-content">
-        <h2>REBL Card</h2>
-        <p><strong>Balance:</strong> <span id="coin-balance">1 REBL Coin</span></p>
-        <p><strong>Tasks Completed:</strong> <span id="tasks-completed">0</span></p>
-        <button class="blue-button">Connect Wallet</button>
-    </div>
-</div>
-
+        <!-- Balance Card -->
+        <div class="balance-card">
+            <div class="card-content">
+                <h2>REBL Card</h2>
+                <p><strong>Balance:</strong> <span id="coin-balance">1 REBL Coin</span></p>
+                <p><strong>Tasks Completed:</strong> <span id="tasks-completed">0</span></p>
+                <button class="blue-button">Connect Wallet</button>
+            </div>
+        </div>
 
         <!-- Buttons for Actions -->
         <div class="action-buttons">
@@ -186,29 +187,30 @@
             </div>
         </div>
 
-        <!-- Game Previews Section -->
-        <section id="game-previews">
-            <h2>Featured Mini-Games</h2>
-            <div class="game-grid">
-                <!-- Game 1 -->
-                <div class="game-item">
-                    <img src="https://telegram.org/img/t_logo.png" alt="Here Wallet Game">
-                    <div class="game-item-content">
-                        <p><strong>Here Wallet Bot:</strong> Build your crypto wallet and compete for rewards in this interactive game!</p>
-                        <a class="neon-button" href="https://t.me/herewalletbot/app?startapp=8272142" target="_blank">Play Now</a>
-                    </div>
-                </div>
-                <!-- Game 2 -->
-                <div class="game-item">
-                    <img src="https://telegram.org/img/t_logo.png" alt="PocketFi Game">
-                    <div class="game-item-content">
-                        <p><strong>PocketFi Bot:</strong> Start mining and manage resources to maximize rewards and boost your portfolio!</p>
-                        <a class="neon-button" href="https://t.me/pocketfi_bot/Mining?startapp=5233920075" target="_blank">Play Now</a>
-                    </div>
-                </div>
+       <!-- Game Previews Section -->
+<section id="game-previews">
+    <h2>Featured Mini-Games</h2>
+    <div class="game-grid">
+        <!-- Game 1 -->
+        <div class="game-item">
+            <img src="https://telegram.org/img/here_wallet_logo.png" alt="Here Wallet Game">
+            <div class="game-item-content">
+                <p><strong>Here Wallet Bot:</strong></p>
+                <p>Build your crypto wallet and compete for rewards in this interactive game!</p>
+                <a class="neon-button" href="https://t.me/herewalletbot/app?startapp=8272142" target="_blank">Play Now</a>
             </div>
-        </section>
-    </section>
+        </div>
+        <!-- Game 2 -->
+        <div class="game-item">
+            <img src="https://telegram.org/img/t_logo.png" alt="PocketFi Game">
+            <div class="game-item-content">
+                <p><strong>PocketFi Bot:</strong></p>
+                <p>Start mining and manage resources to maximize rewards and boost your portfolio!</p>
+                <a class="neon-button" href="https://t.me/pocketfi_bot/Mining?startapp=5233920075" target="_blank">Play Now</a>
+            </div>
+        </div>
+    </div>
+</section>
 
     <script>
         const toggleMenu = document.getElementById('toggle-menu');

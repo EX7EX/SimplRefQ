@@ -317,22 +317,47 @@ h1, h2, h3, p {
     margin-bottom: 15px;
 }
 
-/* Game Grid */
-.game-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1em;
-}
 
-.game-item img {
-    width: 100%;
-    border-radius: 8px;
-    transition: transform 0.3s;
-}
+    /* Adjust the Game Grid Layout */
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin: 0 auto;
+        max-width: 800px;
+    }
 
-.game-item:hover img {
-    transform: scale(1.1);
-}
+    .game-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(145deg, #000000, #333333);
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+        color: white;
+        max-width: 250px;
+        height: 350px;
+        margin: auto;
+        text-align: center;
+    }
+
+    .game-item img {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .game-item-content p {
+        margin: 5px 0;
+    }
+
+    .game-item-content {
+        flex-grow: 1;
+    }
+
 
 /* Blur Overlay */
 .blur-overlay {
