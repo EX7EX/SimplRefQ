@@ -152,6 +152,32 @@
             font-size: 0.75rem;
         }
     }
+
+    .h1-container {
+        position: relative;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .h1-background {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    .welcome-section h1 {
+        color: white;
+        font-size: 2.5rem;
+        margin: 0;
+    }
+
+    /* Daily Reward Button Feedback */
+    .reward-claimed {
+        background-color: gray !important;
+        cursor: not-allowed;
+    }
+
     </style>
 </head>
 <body>
@@ -177,9 +203,10 @@
     <!-- Main Content -->
     <section class="content">
         <!-- Welcome Section -->
-        <div class="welcome-section">
-            <h1>Welcome to REBL Tasks</h1>
-        </div>
+        <div class="welcome-section h1-container">
+            <div class="h1-background">
+                <h1>Welcome to REBL Tasks</h1>
+            </div>
 
         <!-- Balance Card -->
         <div class="balance-card">

@@ -173,3 +173,68 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(button))
 
     application.run_polling()
+
+
+<script>
+    // Daily Reward Logic
+    const dailyRewardButton = document.getElementById('daily-reward');
+    const balanceDisplay = document.getElementById('coin-balance');
+    const REWARD_AMOUNT = 10000;
+
+    dailyRewardButton.addEventListener('click', () => {
+        const lastClaimed = localStorage.getItem('lastDailyReward');
+        const now = new Date();
+
+        if (lastClaimed) {
+            const lastClaimedDate = new Date(lastClaimed);
+            if (lastClaimedDate.toDateString() === now.toDateString()) {
+                alert("You have already claimed your daily reward today!");
+                return;
+            }
+        }
+
+        localStorage.setItem('lastDailyReward', now.toISOString());
+        const currentBalance = parseInt(balanceDisplay.textContent.split(" ")[0]) || 0;
+        balanceDisplay.textContent = `${currentBalance + REWARD_AMOUNT} REBL Coin`;
+        alert("10,000 REBL Coins have been added to your balance!");
+        dailyRewardButton.classList.add('reward-claimed');
+    });
+
+    // View Leaderboard Navigation
+    const leaderboardButton = document.getElementById('view-leaderboard');
+    leaderboardButton.addEventListener('click', () => {
+        window.location.href = "/mini-app/leaderboard.html";
+    });
+
+    // WalletConnect Integration
+    async function setupWalletConnect() {
+        const walletConnectButton = document.querySelector('.blue-button');
+        walletConnectButton.addEventListener('click', async () => {
+            try {
+                const walletConnect = await import('@walletconnect/client');
+                const connector = new walletConnect.default({
+                    bridge: "https://bridge.walletconnect.org",
+                });
+
+                if (!connector.connected) {
+                    await connector.createSession();
+                }
+
+                connector.on("connect", (error, payload) => {
+                    if (error) throw error;
+                    const { accounts } = payload.params[0];
+                    alert(`Connected wallet: ${accounts[0]}`);
+                });
+
+                connector.on("disconnect", () => {
+                    alert("Disconnected from wallet.");
+                });
+            } catch (error) {
+                console.error("WalletConnect Error:", error);
+                alert("Failed to connect wallet.");
+            }
+        });
+    }
+
+    setupWalletConnect();
+</script>
