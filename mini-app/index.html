@@ -88,52 +88,68 @@
             }
         }
 
-        /* Game Section Styles */
-        #game-previews {
-            margin: 20px auto;
-            max-width: 800px;
-        }
+      /* Game Previews Grid Styles */
+    #game-previews {
+        margin: 20px auto;
+        max-width: 1200px;
+    }
+
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .game-item {
+        background: linear-gradient(145deg, #000000, #333333);
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .game-item img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .game-item-content {
+        margin-top: 10px;
+    }
+
+    .game-item-content p {
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+
+    .game-item-content a {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 0.85rem;
+    }
+
+    /* Adjustments for Smaller Screens */
+    @media (max-width: 768px) {
         .game-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin: 0 auto;
-        }
-        .game-item {
-            display: flex;
-            align-items: center;
-            background: linear-gradient(145deg, #000000, #333333);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
-            color: white;
-            gap: 10px;
-            max-width: 80%;
-            margin: 0 auto;
-        }
-        .game-item img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-        }
-        .game-item-content {
-            flex: 1;
-        }
-        .game-item-content p {
-            margin: 5px 0;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .game-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .game-item img {
-                width: 100%;
-                height: auto;
-            }
+        .game-item img {
+            height: 100px;
         }
+
+        .game-item-content p {
+            font-size: 0.8rem;
+        }
+
+        .game-item-content a {
+            font-size: 0.75rem;
+        }
+    }
     </style>
 </head>
 <body>
