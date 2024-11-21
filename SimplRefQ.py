@@ -23,19 +23,9 @@ try:
     client = MongoClient(MONGO_URI)
     db = client['Cluster0']
     users_collection = db['users']
-    transactions_collection = db['transactions']
     rankings_collection = db['rankings']
-    channel_members_collection = db['channel_members']
-except Exception as e:
-    logging.error(f"Failed to connect to MongoDB: {e}")
-    exit(1)
-
-try:
-    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=20000)
-    client.server_info()  # Forces connection on a call to server_info
-    db = client['Cluster0']
     logging.info("Connected to MongoDB successfully.")
-except pymongo.errors.ServerSelectionTimeoutError as e:
+except Exception as e:
     logging.error(f"Failed to connect to MongoDB: {e}")
     exit(1)
 
@@ -94,6 +84,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()  # Acknowledge the callback query
+
+    # Inline Feedback
+    await query.answer(text="Processing your request...", show_alert=False)
 
     if query.data == 'invite_friends':
         await invite_friends(update, context)
@@ -173,68 +166,3 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(button))
 
     application.run_polling()
-
-
-<script>
-    // Daily Reward Logic
-    const dailyRewardButton = document.getElementById('daily-reward');
-    const balanceDisplay = document.getElementById('coin-balance');
-    const REWARD_AMOUNT = 10000;
-
-    dailyRewardButton.addEventListener('click', () => {
-        const lastClaimed = localStorage.getItem('lastDailyReward');
-        const now = new Date();
-
-        if (lastClaimed) {
-            const lastClaimedDate = new Date(lastClaimed);
-            if (lastClaimedDate.toDateString() === now.toDateString()) {
-                alert("You have already claimed your daily reward today!");
-                return;
-            }
-        }
-
-        localStorage.setItem('lastDailyReward', now.toISOString());
-        const currentBalance = parseInt(balanceDisplay.textContent.split(" ")[0]) || 0;
-        balanceDisplay.textContent = `${currentBalance + REWARD_AMOUNT} REBL Coin`;
-        alert("10,000 REBL Coins have been added to your balance!");
-        dailyRewardButton.classList.add('reward-claimed');
-    });
-
-    // View Leaderboard Navigation
-    const leaderboardButton = document.getElementById('view-leaderboard');
-    leaderboardButton.addEventListener('click', () => {
-        window.location.href = "/mini-app/leaderboard.html";
-    });
-
-    // WalletConnect Integration
-    async function setupWalletConnect() {
-        const walletConnectButton = document.querySelector('.blue-button');
-        walletConnectButton.addEventListener('click', async () => {
-            try {
-                const walletConnect = await import('@walletconnect/client');
-                const connector = new walletConnect.default({
-                    bridge: "https://bridge.walletconnect.org",
-                });
-
-                if (!connector.connected) {
-                    await connector.createSession();
-                }
-
-                connector.on("connect", (error, payload) => {
-                    if (error) throw error;
-                    const { accounts } = payload.params[0];
-                    alert(`Connected wallet: ${accounts[0]}`);
-                });
-
-                connector.on("disconnect", () => {
-                    alert("Disconnected from wallet.");
-                });
-            } catch (error) {
-                console.error("WalletConnect Error:", error);
-                alert("Failed to connect wallet.");
-            }
-        });
-    }
-
-    setupWalletConnect();
-</script>
