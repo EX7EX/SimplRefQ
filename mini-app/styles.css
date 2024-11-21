@@ -69,7 +69,7 @@ h1 {
     margin: 20px;
     text-align: center;
     text-shadow: 
-      0 0 15px rgb(255, 255, 255), 
+      0 0 15px rgba(255, 255, 255, 0.839), 
       0 0 30px rgba(0, 0, 0, 0.4);
     background: linear-gradient(135deg, #f52a2a, #ffe587); /* Rich, warm gradient for an expensive feel */
     -webkit-background-clip: text;
@@ -226,6 +226,21 @@ h1 {
 .blue-button:hover {
     background-color: #0056b3;
 }
+
+/* Buttons for Actions */
+.action-buttons {
+    display: flex;           /* Use flexbox to align buttons horizontally */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px;               /* Add space between the buttons */
+    flex-wrap: wrap;         /* Allow buttons to wrap if there's not enough space */
+}
+
+/* Ensure buttons stay inline on mobile */
+.action-buttons .neon-button {
+    flex: 1;                 /* Make each button take up equal space */
+    min-width: 150px;        /* Ensure the buttons do not shrink too much */
+}
+
 
 /* Fix Leaderboard Overlap */
 nav ul li {
