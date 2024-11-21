@@ -71,7 +71,7 @@ h1 {
     text-shadow: 
       0 0 15px rgb(255, 255, 255), 
       0 0 30px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #889df8, #ffe587); /* Rich, warm gradient for an expensive feel */
+    background: linear-gradient(135deg, #f52a2a, #ffe587); /* Rich, warm gradient for an expensive feel */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px; /* Slightly increased letter spacing for a more elegant touch */
