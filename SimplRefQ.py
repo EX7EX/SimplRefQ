@@ -250,11 +250,16 @@ async def main():
 
 # For environments with existing event loops (like Jupyter or IDEs)
 if __name__ == "__main__":
+    import asyncio
     try:
-        # Check if we're in an already running event loop
-        import asyncio
+        # Use a running event loop if one exists
         loop = asyncio.get_event_loop()
-        loop.create_task(main())  # Schedule the main function to run
+        if loop.is_closed():
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
     except RuntimeError:
-        # In case the event loop is already running, run the main function
-        asyncio.run(main())  # Fallback to running the event loop if not in existing loop
+        # No current event loop in the context
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    loop.run_until_complete(main())
