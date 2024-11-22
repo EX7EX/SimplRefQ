@@ -62,18 +62,18 @@ nav ul li a:hover, nav ul li a.active {
 
 /* Main Heading */
 h1 {
-    color: #ff69b4; /* Bright pink for a fun, playful vibe */
+    color: #2449ed; /* deep blue for a fun, playful vibe */
     font-size: 6em; /* Extra large for cartoonish impact */
     font-family: 'Comic Sans MS', 'Luckiest Guy', cursive; /* Babyish, cartoonish fonts */
     text-transform: uppercase; /* All caps for blocky style */
     margin: 20px;
     text-align: center;
     text-shadow: 
-      0 0 5px #ffb6c1,  /* Soft pink glow */
+      0 0 5px #53835b,  /* Soft pink glow */
       0 0 10px #ffa07a, /* Peach glow */
-      0 0 15px #ff69b4; /* Hot pink for depth */
+      0 0 15px #06aa03; /* Hot pink for depth */
     background: none; /* No gradient to keep it simple */
-    -webkit-text-fill-color: #ff69b4; /* Fills text with pink */
+    -webkit-text-fill-color: #fdfdfd; /* Fills text with pink */
     letter-spacing: 5px; /* Large spacing for blocky letters */
     font-weight: 900; /* Extra bold for emphasis */
 }
