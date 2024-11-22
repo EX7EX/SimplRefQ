@@ -71,13 +71,13 @@ h1 {
     text-shadow: 
       0 0 15px rgba(255, 255, 255, 0.839), 
       0 0 30px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #f52a2a, #ffe587); /* Rich, warm gradient for an expensive feel */
+    background: linear-gradient(135deg, #690202, #e6b216); /* Rich, warm gradient for an expensive feel */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px; /* Slightly increased letter spacing for a more elegant touch */
     text-transform: uppercase;
-    -webkit-text-stroke: 1px #222; /* Subtle outline */
-    text-stroke: 1px #222;
+    -webkit-text-stroke: 1px #171143; /* Subtle outline */
+    text-stroke: 1px #1f0505;
     font-weight: 800; /* Bold to make the text stand out */
   }
   
