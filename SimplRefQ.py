@@ -9,6 +9,16 @@ import os
 import logging
 from datetime import datetime, date
 
+def process_data(update: Update, context: CallbackContext):
+    # Notify user that data is being processed
+    update.message.chat.send_action(action='typing')
+
+    # Simulate a delay (e.g., fetching or processing data)
+    time.sleep(2)
+
+    # Send the result once processing is complete
+    update.message.reply_text("Data has been processed!")
+
 app = Flask(__name__)
 
 # Set up logging

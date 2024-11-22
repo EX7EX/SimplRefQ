@@ -105,7 +105,7 @@ h1 {
     cursor: pointer;
     margin: 20px;
     border-radius: 10px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
     text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff00;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     z-index: 1;
@@ -125,12 +125,21 @@ h1 {
 }
 
 .neon-button:hover {
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.6), 0 0 20px #00ff99;
+    border-color: #00ff00;  /* Neon green */
+  box-shadow: 0 0 10px #ff33cc, 0 0 20px #090143, 0 0 30px #33006c;
+  color: #230000;
+  cursor: pointer;
 }
 
 .neon-button:hover::before {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
 }
+
+/* Optional: Add more variety with different neon colors */
+button.neon-blue:hover {
+    border-color: #33ccff; /* Neon blue */
+    box-shadow: 0 0 10px #33ccff, 0 0 20px #33ccff, 0 0 30px #33ccff;
+  }
 
 /* CSS Icons */
 .icon-home {

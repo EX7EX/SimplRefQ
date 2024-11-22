@@ -164,22 +164,23 @@
     }
 
     .h1-background {
-        background-color: rgba(0, 0, 0, 0.768);
+        background-color: rgba(0, 0, 0, 0.913);
         padding: 20px;
         border-radius: 10px;
         display: inline-block;
     }
 
     .progress-bar {
-            background-color: #ccc;
+            background-color: #7c7b7b;
             border-radius: 5px;
-            height: 20px;
+            height: 10px;
             overflow: hidden;
         }
 
         .progress-fill {
-            background-color: #ff007f;
+            background-color: #1eff00;
             height: 100%;
+            transition: width 0.5s ease-in-out;
         }
 
 
@@ -195,6 +196,20 @@
         background-color: gray !important;
         cursor: not-allowed;
     }
+
+    .spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
     </style>
 </head>
@@ -273,15 +288,74 @@
             </div>
         </div>
     </div>
+    <div>
+        <p id="coin-balance">Loading REBL Coin...</p>
+        <p id="tasks-completed">Loading Tasks Completed...</p>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: 0%;"></div>
+        </div>
+        <p>Wallet Address: <span id="wallet-address">Loading...</span></p>
+        <p>Global Balance: <span id="global-balance">Loading...</span></p>
+        <p>Leadership Rank: <span id="leadership-rank">Loading...</span></p>
+    </div>
+    <div id="loading-spinner" class="spinner" style="display:none;"></div>
 </section>
 
     <script>
+
+function showSpinner() {
+    document.getElementById("loading-spinner").style.display = "block";
+}
+
+function hideSpinner() {
+    document.getElementById("loading-spinner").style.display = "none";
+}
+
+// Example usage when loading data
+function fetchData() {
+    showSpinner();
+    setTimeout(() => {
+        hideSpinner();
+        alert("Data loaded!");
+    }, 3000);  // Simulate a network request
+}
+
         const toggleMenu = document.getElementById('toggle-menu');
         const navLinks = document.querySelector('nav ul');
         
         toggleMenu.addEventListener('click', () => {
             navLinks.classList.toggle('show');
         });
+        document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/sync')
+        .then(res => res.json())
+        .then(data => {
+            // Update REBL Coin Balance
+            document.getElementById('coin-balance').textContent = `${data.balance} REBL Coin`;
+            
+            // Update Tasks Completed
+            document.getElementById('tasks-completed').textContent = data.tasksCompleted;
+            
+            // Update Progress Bar
+            document.querySelector('.progress-fill').style.width = `${data.progress}%`;
+            
+            // Update Wallet Address
+            if (data.walletAddress) {
+                document.getElementById('wallet-address').textContent = data.walletAddress;
+            }
+
+            // Update Global Balance
+            if (data.globalBalance !== undefined) {
+                document.getElementById('global-balance').textContent = `${data.globalBalance} Global REBL`;
+            }
+
+            // Update Leadership Rank
+            if (data.leadershipRank !== undefined) {
+                document.getElementById('leadership-rank').textContent = `#${data.leadershipRank}`;
+            }
+        })
+        .catch(console.error);
+});
 
         // Constants
 const REWARD_AMOUNT = 10000;
@@ -360,7 +434,7 @@ async function setupWalletConnect() {
             });
         } catch (error) {
             console.error("WalletConnect Error:", error);
-            alert("Failed to connect wallet.");
+            alert("Failed to connect wallet. Please try again.");
         } finally {
             walletConnectButton.disabled = false;
             walletConnectButton.removeChild(spinner);
