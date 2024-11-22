@@ -8,6 +8,128 @@
     <link rel="stylesheet" href="/mini-app/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Consolidated Styles */
+        body {
+            font-family: 'Cinzel Decorative', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: #222;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            background-color: #ff007f;
+        }
+
+        #toggle-menu {
+            display: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .neon-button {
+            padding: 10px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #ff007f;
+            color: white;
+            border: none;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
+        }
+
+        .h1-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .h1-background {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .progress-bar {
+            background-color: #ccc;
+            border-radius: 5px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background-color: #ff007f;
+            height: 100%;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .game-item {
+            background: linear-gradient(145deg, #000000, #333333);
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+        }
+
+        .game-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #333;
+                padding: 15px;
+                border-radius: 8px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            #toggle-menu {
+                display: block;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -38,13 +160,13 @@
                 <h2>REBL Card</h2>
                 <p><strong>Balance:</strong> <span id="coin-balance">1 REBL Coin</span></p>
                 <p><strong>Tasks Completed:</strong> <span id="tasks-completed">0</span></p>
-                <button class="blue-button" data-action="wallet-connect">Connect Wallet</button>
+                <button class="neon-button" data-action="wallet-connect">Connect Wallet</button>
             </div>
         </div>
 
         <!-- Buttons for Actions -->
         <div class="action-buttons">
-            <button class="neon-button" data-action="daily-reward" id="daily-reward">Claim Daily Reward</button>
+            <button class="neon-button" data-action="daily-reward">Claim Daily Reward</button>
             <button class="neon-button" data-action="view-leaderboard">View Leaderboard</button>
         </div>
 
@@ -81,27 +203,20 @@
     </section>
 
     <script>
-        // Toggle menu for responsive navigation
         const toggleMenu = document.getElementById('toggle-menu');
         const navLinks = document.querySelector('nav ul');
-        toggleMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('show');
-        });
+        toggleMenu.addEventListener('click', () => navLinks.classList.toggle('show'));
 
-        // Synchronization and initialization
-        function initializeApp() {
+        document.addEventListener('DOMContentLoaded', () => {
             fetch('/api/sync')
-                .then(response => response.json())
+                .then(res => res.json())
                 .then(data => {
-                    // Update balance and tasks completed
                     document.getElementById('coin-balance').textContent = `${data.balance} REBL Coin`;
                     document.getElementById('tasks-completed').textContent = data.tasksCompleted;
                     document.querySelector('.progress-fill').style.width = `${data.progress}%`;
                 })
                 .catch(console.error);
-        }
-
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        });
     </script>
 </body>
 
