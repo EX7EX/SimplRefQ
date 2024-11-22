@@ -62,25 +62,22 @@ nav ul li a:hover, nav ul li a.active {
 
 /* Main Heading */
 h1 {
-    color: #ffffff;
-    font-size: 5em; /* Larger size for more prominence */
-    font-family: 'Playfair Display', serif; /* Elegant, classic font for a luxury feel */
-    text-transform: uppercase;
+    color: #ff69b4; /* Bright pink for a fun, playful vibe */
+    font-size: 6em; /* Extra large for cartoonish impact */
+    font-family: 'Comic Sans MS', 'Luckiest Guy', cursive; /* Babyish, cartoonish fonts */
+    text-transform: uppercase; /* All caps for blocky style */
     margin: 20px;
     text-align: center;
     text-shadow: 
-      0 0 15px rgba(255, 255, 255, 0.839), 
-      0 0 30px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(135deg, #690202, #e6b216); /* Rich, warm gradient for an expensive feel */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 2px; /* Slightly increased letter spacing for a more elegant touch */
-    text-transform: uppercase;
-    -webkit-text-stroke: 1px #171143; /* Subtle outline */
-    text-stroke: 1px #1f0505;
-    font-weight: 800; /* Bold to make the text stand out */
-  }
-  
+      0 0 5px #ffb6c1,  /* Soft pink glow */
+      0 0 10px #ffa07a, /* Peach glow */
+      0 0 15px #ff69b4; /* Hot pink for depth */
+    background: none; /* No gradient to keep it simple */
+    -webkit-text-fill-color: #ff69b4; /* Fills text with pink */
+    letter-spacing: 5px; /* Large spacing for blocky letters */
+    font-weight: 900; /* Extra bold for emphasis */
+}
+
   
   
 @media only screen and (max-width: 768px) {
