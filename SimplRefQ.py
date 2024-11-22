@@ -20,15 +20,18 @@ if TELEGRAM_BOT_TOKEN is None:
     logging.error("No token found. Please check your .env file.")
     exit(1)
 
-# MongoDB connection setup
+# Revised MongoDB connection handling
 try:
     client = MongoClient(MONGO_URI)
     db = client['Cluster0']
     users_collection = db['users']
     rankings_collection = db['rankings']
     logging.info("Connected to MongoDB successfully.")
-except Exception as e:
-    logging.error(f"Failed to connect to MongoDB: {e}")
+except pymongo.errors.ConfigurationError as ce:
+    logging.error(f"MongoDB Configuration Error: {ce}")
+    exit(1)
+except pymongo.errors.ConnectionError as ce:
+    logging.error(f"MongoDB Connection Error: {ce}")
     exit(1)
 
 # Helper function: Check if user has joined the required channel
@@ -40,24 +43,24 @@ async def has_joined_channel(context: ContextTypes.DEFAULT_TYPE, user_id: int) -
         logging.warning(f"Error checking channel membership for user {user_id}: {e}")
         return False
 
-# Start Command Handler
+# Updated start command with more robust user data initialization
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.effective_user.id
     username = update.effective_user.username or "Anonymous"
 
-    # Check if user has joined the required channel
+     # Ensure the user joins the required channel
     if not await has_joined_channel(context, user_id):
         await context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text="You must join @simplco to unlock full bot features.",
+            text="Please join @simplco to access all bot features!",
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("Join Channel", url="https://t.me/simplco")]
             ])
         )
         return
-
-    # Add user to database if not already present
-    if not users_collection.find_one({"user_id": user_id}):
+    # Ensure proper user record initialization
+    user_record = users_collection.find_one({"user_id": user_id})
+    if not user_record:
         users_collection.insert_one({
             "user_id": user_id,
             "username": username,
@@ -65,9 +68,11 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             "wallet": 0,
             "rank": None,
             "joined_channel": True,
-            "last_claimed": None,  # New field to track daily rewards
-            "tasks_completed": []  # Initialize as empty list
+            "last_claimed": None,
+            "tasks_completed": []
         })
+    else:
+        users_collection.update_one({"user_id": user_id}, {"$set": {"joined_channel": True}})
 
     # Show main menu with inline buttons
     reply_markup = InlineKeyboardMarkup([
@@ -167,24 +172,28 @@ async def ranking(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logging.error(f"Error retrieving ranking: {e}")
         await update.callback_query.message.reply_text("Error retrieving ranking data.")
 
-# Daily Rewards Handler
+# Updated daily rewards handler with enhanced date handling
 async def daily_rewards(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_id = update.callback_query.from_user.id
     try:
         user_data = users_collection.find_one({"user_id": user_id})
         if not user_data:
-            await update.callback_query.message.reply_text("User not found in the database.")
+            await update.callback_query.message.reply_text("User data not found. Please start the bot first.")
             return
 
-        # Check if the user already claimed the reward today
+ # Handle date comparison robustly
         last_claimed = user_data.get("last_claimed")
         if last_claimed:
-            last_claimed_date = datetime.strptime(last_claimed, "%Y-%m-%d")
-            if last_claimed_date.date() == datetime.utcnow().date():
-                await update.callback_query.message.reply_text("You have already claimed your daily reward today. Come back tomorrow!")
-                return
+            try:
+                last_claimed_date = datetime.strptime(last_claimed, "%Y-%m-%d")
+                if last_claimed_date.date() == datetime.utcnow().date():
+                    await update.callback_query.message.reply_text("You've already claimed today's reward. Try again tomorrow!")
+                    return
+            except ValueError:
+                logging.warning(f"Invalid date format in last_claimed for user {user_id}: {last_claimed}")
 
-        # Add the reward to the user's balance
+
+     # Reward allocation and database update
         daily_reward = 10000
         new_balance = user_data.get("balance", 0) + daily_reward
         users_collection.update_one(
@@ -192,10 +201,12 @@ async def daily_rewards(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
             {"$set": {"balance": new_balance, "last_claimed": datetime.utcnow().strftime("%Y-%m-%d")}}
         )
 
-        await update.callback_query.message.reply_text(f"🎉 You have claimed your daily reward of {daily_reward} $REBLCOINS! Your new balance is {new_balance} $REBLCOINS.")
+        await update.callback_query.message.reply_text(
+            f"🎉 You've claimed {daily_reward} $REBLCOINS! New balance: {new_balance}."
+        )
     except Exception as e:
-        logging.error(f"Error processing daily rewards: {e}")
-        await update.callback_query.message.reply_text("An error occurred while claiming your daily reward. Please try again later.")
+        logging.error(f"Error processing daily rewards for user {user_id}: {e}")
+        await update.callback_query.message.reply_text("An error occurred while claiming rewards. Please try again later.")
 
 # Task Completion Handler
 async def complete_task(user_id: int, task_id: str) -> None:
@@ -216,6 +227,15 @@ async def complete_task(user_id: int, task_id: str) -> None:
     except Exception as e:
         logging.error(f"Error marking task '{task_id}' as completed for user {user_id}: {e}")
 
+from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# MongoDB connection and other initialization code...
+
 # Main function to set up the bot
 async def main():
     # Initialize the bot with the token
@@ -228,6 +248,13 @@ async def main():
     # Run the bot
     await application.run_polling()
 
+# For environments with existing event loops (like Jupyter or IDEs)
 if __name__ == "__main__":
-    import asyncio
-    asyncio.run(main())
+    try:
+        # Check if we're in an already running event loop
+        import asyncio
+        loop = asyncio.get_event_loop()
+        loop.create_task(main())  # Schedule the main function to run
+    except RuntimeError:
+        # In case the event loop is already running, run the main function
+        asyncio.run(main())  # Fallback to running the event loop if not in existing loop
