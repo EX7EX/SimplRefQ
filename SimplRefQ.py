@@ -246,20 +246,9 @@ async def main():
     application.add_handler(CallbackQueryHandler(button))
 
     # Run the bot
-    await application.run_polling()
+    async with application:
+        await application.run_polling()
 
-# For environments with existing event loops (like Jupyter or IDEs)
 if __name__ == "__main__":
-    import asyncio
-    try:
-        # Use a running event loop if one exists
-        loop = asyncio.get_event_loop()
-        if loop.is_closed():
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-    except RuntimeError:
-        # No current event loop in the context
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-    loop.run_until_complete(main())
+    # Use asyncio.run() for modern, clean event loop management
+    asyncio.run(main())
