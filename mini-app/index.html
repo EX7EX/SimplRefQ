@@ -1,54 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>REBL Coin - Home</title>
     <link rel="stylesheet" href="/mini-app/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
     <style>
-        /* Consolidated Styles */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap');
+
+        /* General Styles */
         body {
             font-family: 'Cinzel Decorative', cursive, sans-serif;
             margin: 0;
             padding: 0;
-        }
-
-        nav {
-            background-color: #222;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            gap: 15px;
-        }
-
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-        }
-
-        nav ul li a:hover,
-        nav ul li a.active {
-            background-color: #ff007f;
-        }
-
-        #toggle-menu {
-            display: none;
-            font-size: 1.5rem;
-            color: white;
-            cursor: pointer;
         }
 
         .neon-button {
@@ -61,21 +27,150 @@
             color: white;
             border: none;
             box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
-        }
-
-        .h1-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .h1-background {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
+            text-decoration: none;
             display: inline-block;
+            text-align: center;
+        }
+        .neon-button:hover {
+            background-color: #cc0066;
         }
 
-        .progress-bar {
+        /* Navigation Bar Styles */
+        nav {
+            background-color: #222;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 15px;
+        }
+        nav ul li {
+            display: inline;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            background-color: #ff007f;
+        }
+        #toggle-menu {
+            display: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Responsive Nav */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #333;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+            }
+            nav ul.show {
+                display: flex;
+            }
+            #toggle-menu {
+                display: block;
+            }
+        }
+
+      /* Game Previews Grid Styles */
+    #game-previews {
+        margin: 20px auto;
+        max-width: 1200px;
+    }
+
+    .game-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .game-item {
+        background: linear-gradient(145deg, #000000, #333333);
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .game-item img {
+        width: 100%;
+        height: 120px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .game-item-content {
+        margin-top: 10px;
+    }
+
+    .game-item-content p {
+        font-size: 0.9rem;
+        margin: 5px 0;
+    }
+
+    .game-item-content a {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 0.85rem;
+    }
+
+    /* Adjustments for Smaller Screens */
+    @media (max-width: 768px) {
+        .game-grid {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .game-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .game-item-content p {
+            font-size: 0.8rem;
+        }
+
+        .game-item-content a {
+            font-size: 0.75rem;
+        }
+    }
+
+    .h1-container {
+        position: relative;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .h1-background {
+        background-color: rgba(0, 0, 0, 0.768);
+        padding: 20px;
+        border-radius: 10px;
+        display: inline-block;
+    }
+
+    .progress-bar {
             background-color: #ccc;
             border-radius: 5px;
             height: 20px;
@@ -87,52 +182,30 @@
             height: 100%;
         }
 
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
 
-        .game-item {
-            background: linear-gradient(145deg, #000000, #333333);
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
-            color: white;
-            text-align: center;
-        }
 
-        .game-item img {
-            width: 100%;
-            height: 120px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
+    .welcome-section h1 {
+        color: rgb(155, 255, 32);
+        font-size: 2.5rem;
+        margin: 0;
+    }
 
-        @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                background-color: #333;
-                padding: 15px;
-                border-radius: 8px;
-            }
+    /* Daily Reward Button Feedback */
+    .reward-claimed {
+        background-color: gray !important;
+        cursor: not-allowed;
+    }
 
-            nav ul.show {
-                display: flex;
-            }
-
-            #toggle-menu {
-                display: block;
-            }
-        }
     </style>
 </head>
-
 <body>
+    <!-- Dynamic Glitch Background -->
+    <div class="glitch-background">
+        <div class="layer"></div>
+        <div class="layer"></div>
+        <div class="layer"></div>
+    </div>
+
     <!-- Navigation -->
     <nav>
         <div id="toggle-menu">☰</div>
@@ -152,7 +225,6 @@
             <div class="h1-background">
                 <h1>Welcome to REBL Tasks</h1>
             </div>
-        </div>
 
         <!-- Balance Card -->
         <div class="balance-card">
@@ -160,14 +232,14 @@
                 <h2>REBL Card</h2>
                 <p><strong>Balance:</strong> <span id="coin-balance">1 REBL Coin</span></p>
                 <p><strong>Tasks Completed:</strong> <span id="tasks-completed">0</span></p>
-                <button class="neon-button" data-action="wallet-connect">Connect Wallet</button>
+                <button class="blue-button">Connect Wallet</button>
             </div>
         </div>
 
         <!-- Buttons for Actions -->
         <div class="action-buttons">
-            <button class="neon-button" data-action="daily-reward">Claim Daily Reward</button>
-            <button class="neon-button" data-action="view-leaderboard">View Leaderboard</button>
+            <button class="neon-button" id="daily-reward">Claim Daily Reward</button>
+            <button class="neon-button" id="view-leaderboard">View Leaderboard</button>
         </div>
 
         <!-- Progress Tracker -->
@@ -178,46 +250,172 @@
             </div>
         </div>
 
-        <!-- Game Previews Section -->
-        <section id="game-previews">
-            <h2>Featured Mini-Games</h2>
-            <div class="game-grid">
-                <div class="game-item">
-                    <img src="https://telegram.org/img/t_logo.png" alt="Here Wallet Game">
-                    <div class="game-item-content">
-                        <p><strong>Here Wallet Bot:</strong></p>
-                        <p>Build your crypto wallet and compete for rewards in this interactive game!</p>
-                        <a class="neon-button" href="https://t.me/herewalletbot/app?startapp=8272142" target="_blank">Play Now</a>
-                    </div>
-                </div>
-                <div class="game-item">
-                    <img src="https://telegram.org/img/t_logo.png" alt="PocketFi Game">
-                    <div class="game-item-content">
-                        <p><strong>PocketFi Bot:</strong></p>
-                        <p>Start mining and manage resources to maximize rewards and boost your portfolio!</p>
-                        <a class="neon-button" href="https://t.me/pocketfi_bot/Mining?startapp=5233920075" target="_blank">Play Now</a>
-                    </div>
-                </div>
+       <!-- Game Previews Section -->
+<section id="game-previews">
+    <h2>Featured Mini-Games</h2>
+    <div class="game-grid">
+        <!-- Game 1 -->
+        <div class="game-item">
+            <img src="https://telegram.org/img/t_logo.png" alt="Here Wallet Game">
+            <div class="game-item-content">
+                <p><strong>Here Wallet Bot:</strong></p>
+                <p>Build your crypto wallet and compete for rewards in this interactive game!</p>
+                <a class="neon-button" href="https://t.me/herewalletbot/app?startapp=8272142" target="_blank">Play Now</a>
             </div>
-        </section>
-    </section>
+        </div>
+        <!-- Game 2 -->
+        <div class="game-item">
+            <img src="https://telegram.org/img/t_logo.png" alt="PocketFi Game">
+            <div class="game-item-content">
+                <p><strong>PocketFi Bot:</strong></p>
+                <p>Start mining and manage resources to maximize rewards and boost your portfolio!</p>
+                <a class="neon-button" href="https://t.me/pocketfi_bot/Mining?startapp=5233920075" target="_blank">Play Now</a>
+            </div>
+        </div>
+    </div>
+</section>
 
     <script>
         const toggleMenu = document.getElementById('toggle-menu');
         const navLinks = document.querySelector('nav ul');
-        toggleMenu.addEventListener('click', () => navLinks.classList.toggle('show'));
-
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('/api/sync')
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById('coin-balance').textContent = `${data.balance} REBL Coin`;
-                    document.getElementById('tasks-completed').textContent = data.tasksCompleted;
-                    document.querySelector('.progress-fill').style.width = `${data.progress}%`;
-                })
-                .catch(console.error);
+        
+        toggleMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
         });
+
+        // Constants
+const REWARD_AMOUNT = 10000;
+
+// Daily Reward Logic
+function initializeDailyReward() {
+    const dailyRewardButton = document.getElementById('daily-reward');
+    const balanceDisplay = document.getElementById('coin-balance');
+
+    const resetDailyReward = () => {
+        const lastClaimedDate = localStorage.getItem('lastDailyReward');
+        const now = new Date();
+        if (lastClaimedDate && new Date(lastClaimedDate).toDateString() !== now.toDateString()) {
+            dailyRewardButton.classList.remove('reward-claimed');
+        }
+    };
+
+    resetDailyReward();
+
+    dailyRewardButton.addEventListener('click', () => {
+        const lastClaimed = localStorage.getItem('lastDailyReward');
+        const now = new Date();
+
+        if (lastClaimed) {
+            const lastClaimedDate = new Date(lastClaimed);
+            if (lastClaimedDate.toDateString() === now.toDateString()) {
+                alert("You have already claimed your daily reward today!");
+                return;
+            }
+        }
+
+        localStorage.setItem('lastDailyReward', now.toISOString());
+        const currentBalance = parseInt(balanceDisplay.textContent.split(" ")[0]) || 0;
+        balanceDisplay.textContent = `${currentBalance + REWARD_AMOUNT} REBL Coin`;
+        alert("10,000 REBL Coins have been added to your balance!");
+        dailyRewardButton.classList.add('reward-claimed');
+    });
+}
+
+// Leaderboard Navigation
+function initializeLeaderboardNavigation() {
+    const leaderboardButton = document.getElementById('view-leaderboard');
+    leaderboardButton.addEventListener('click', () => {
+        window.location.href = `${window.location.origin}/mini-app/leaderboard.html`;
+    });
+}
+
+// WalletConnect Integration
+async function setupWalletConnect() {
+    const walletConnectButton = document.querySelector('.blue-button');
+
+    walletConnectButton.addEventListener('click', async () => {
+        walletConnectButton.disabled = true;
+        const spinner = document.createElement('div');
+        spinner.classList.add('loading-spinner');
+        walletConnectButton.appendChild(spinner);
+
+        try {
+            const walletConnect = await import('@walletconnect/client');
+            const connector = new walletConnect.default({
+                bridge: "https://bridge.walletconnect.org",
+            });
+
+            if (!connector.connected) {
+                await connector.createSession();
+            }
+
+            connector.on("connect", (error, payload) => {
+                if (error) throw error;
+                const { accounts } = payload.params[0];
+                alert(`Connected wallet: ${accounts[0]}`);
+            });
+
+            connector.on("disconnect", () => {
+                alert("Disconnected from wallet.");
+            });
+        } catch (error) {
+            console.error("WalletConnect Error:", error);
+            alert("Failed to connect wallet.");
+        } finally {
+            walletConnectButton.disabled = false;
+            walletConnectButton.removeChild(spinner);
+        }
+    });
+}
+
+// Centralized Button Interaction Handler
+function initializeButtons() {
+    document.addEventListener('click', (event) => {
+        if (!event.target.classList.contains('action-button')) return;
+
+        const action = event.target.dataset.action;
+
+        switch (action) {
+            case 'daily-reward':
+                initializeDailyReward();
+                break;
+            case 'view-leaderboard':
+                initializeLeaderboardNavigation();
+                break;
+            case 'wallet-connect':
+                setupWalletConnect();
+                break;
+            default:
+                console.error("Unknown action triggered.");
+        }
+    });
+}
+
+// Synchronization and Initialization
+function initializeApp() {
+    // Synchronize with the backend
+    fetch('/api/sync')
+        .then(response => response.json())
+        .then(data => {
+            // Update frontend state based on backend data
+            document.getElementById('coin-balance').textContent = `${data.balance} REBL Coin`;
+            localStorage.setItem('lastDailyReward', data.lastDailyReward || null);
+        })
+        .catch(error => {
+            console.error("Error synchronizing with backend:", error);
+        });
+
+    // Initialize individual features
+    initializeDailyReward();
+    initializeLeaderboardNavigation();
+    setupWalletConnect();
+}
+
+// Initialize the application once the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeApp();
+});
+
     </script>
 </body>
-
 </html>
