@@ -1,16 +1,31 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "mini-app/*",
-        "use": "@vercel/static"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/mini-app/$1"
-      }
-    ]
-  }
-  
+  "version": 2,
+  "builds": [
+    {
+      "src": "mini-app/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "SimplRefQ.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/bot.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/bot",
+      "dest": "api/bot.py"
+    },
+    {
+      "src": "/api/telegram",
+      "dest": "SimplRefQ.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/mini-app/$1"
+    }
+  ]
+}

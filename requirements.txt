@@ -1,3 +1,6 @@
 python-telegram-bot>=20.0
 pymongo>=4.0.0
 python-dotenv>=0.20.0
+flask
+pytz
+requests==2.31.0
