@@ -1,0 +1,1 @@
+worker: python /app/simplrefq-bot/simplrefq.py
