@@ -1,0 +1,384 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Main Styling */
+body {
+    background-color: #0d0d0d;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 1.6;
+    transition: background-color 0.5s, color 0.5s;
+    overflow-x: hidden;
+}
+
+body.dark-mode {
+    background-color: #f4f4f4;
+    color: #0d0d0d;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Navigation Bar */
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #1a1a1a;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+}
+
+nav ul li a:hover, nav ul li a.active {
+    border: 1px solid #ff00ff;
+    color: #ff00ff;
+}
+
+
+/* Main Heading */
+h1 {
+    color: #2449ed; /* deep blue for a fun, playful vibe */
+    font-size: 6em; /* Extra large for cartoonish impact */
+    font-family: 'Comic Sans MS', 'Luckiest Guy', cursive; /* Babyish, cartoonish fonts */
+    text-transform: uppercase; /* All caps for blocky style */
+    margin: 20px;
+    text-align: center;
+    text-shadow: 
+      0 0 5px #53835b,  /* Soft pink glow */
+      0 0 10px #ffa07a, /* Peach glow */
+      0 0 15px #06aa03; /* Hot pink for depth */
+    background: none; /* No gradient to keep it simple */
+    -webkit-text-fill-color: #fdfdfd; /* Fills text with pink */
+    letter-spacing: 5px; /* Large spacing for blocky letters */
+    font-weight: 900; /* Extra bold for emphasis */
+}
+
+  
+  
+@media only screen and (max-width: 768px) {
+  h1 {
+    font-size: 1.8em;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+  
+
+/* Neon Button with Depth Effect */
+.neon-button {
+    position: relative;
+    background-color: #000000;
+    border: 2px solid #00ff99;
+    color: #00ff99;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    text-shadow: 0 0 5px #00ff99, 0 0 10px #00ff00;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.neon-button::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(145deg, #1a1a1a, #000000);
+    border-radius: 10px;
+    z-index: -1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.neon-button:hover {
+    border-color: #00ff00;  /* Neon green */
+  box-shadow: 0 0 10px #ff33cc, 0 0 20px #090143, 0 0 30px #33006c;
+  color: #230000;
+  cursor: pointer;
+}
+
+.neon-button:hover::before {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+}
+
+/* Optional: Add more variety with different neon colors */
+button.neon-blue:hover {
+    border-color: #33ccff; /* Neon blue */
+    box-shadow: 0 0 10px #33ccff, 0 0 20px #33ccff, 0 0 30px #33ccff;
+  }
+
+/* CSS Icons */
+.icon-home {
+    width: 40px;
+    height: 40px;
+    background-color: #00ff99;
+    clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+    margin: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-home:hover {
+    transform: scale(1.1);
+    background-color: #ff00ff;
+}
+
+.icon-user {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #00ff99;
+    border-radius: 50%;
+    margin: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-user::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 20%;
+    background-color: #00ff99;
+    border-radius: 50%;
+}
+
+.icon-gear {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #00ff99;
+    clip-path: polygon(
+        50% 0%, 60% 30%, 100% 50%, 60% 70%, 50% 100%, 40% 70%, 0% 50%, 40% 30%
+    );
+    margin: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-gear:hover {
+    transform: rotate(20deg) scale(1.1);
+    background-color: #ff00ff;
+}
+
+/* Balance Card Styles */
+.balance-card {
+    background: linear-gradient(145deg, #000000, #1e1e1e);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8);
+    color: white;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.balance-card::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #007bff, #00aaff);
+    z-index: -1;
+    border-radius: 14px;
+}
+
+.blue-button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    box-shadow: 0px 0px 10px rgba(0, 123, 255, 0.5);
+}
+
+.blue-button:hover {
+    background-color: #0056b3;
+}
+
+/* Buttons for Actions */
+.action-buttons {
+    display: flex;           /* Use flexbox to align buttons horizontally */
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px;               /* Add space between the buttons */
+    flex-wrap: wrap;         /* Allow buttons to wrap if there's not enough space */
+}
+
+/* Ensure buttons stay inline on mobile */
+.action-buttons .neon-button {
+    flex: 1;                 /* Make each button take up equal space */
+    min-width: 150px;        /* Ensure the buttons do not shrink too much */
+}
+
+
+/* Fix Leaderboard Overlap */
+nav ul li {
+    white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+    nav ul {
+        display: flex;
+        justify-content: space-evenly;
+    }
+}
+
+/* Cascading Text Fix */
+.game-item-content p {
+    word-wrap: break-word;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+h1, h2, h3, p {
+    overflow-wrap: break-word;
+}
+
+
+/* Content Section */
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    gap: 15px;
+}
+
+.content p {
+    font-size: 1.1em;
+    color: #cccccc;
+}
+
+/* Background Animation */
+.glitch-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/cyberpunk-background.jpg'), url('/bokeh_PNG12.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-blend-mode: color-burn;
+    z-index: -1;
+    animation: glitch 5s infinite;
+}
+
+.bokeh-overlay {
+    opacity: 0.4;
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+    0% { transform: translate(0, 0); opacity: 1; }
+    10% { transform: translate(-2px, -2px); opacity: 0.8; }
+    20% { transform: translate(2px, 2px); opacity: 1; }
+    100% { transform: translate(0, 0); opacity: 1; }
+}
+
+/* Task Styling */
+.task {
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 10px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.task:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+}
+
+.task h2 {
+    color: #ff0099;
+    margin-bottom: 10px;
+}
+
+.task p {
+    color: #cccccc;
+    margin-bottom: 15px;
+}
+
+
+
+/* Blur Overlay */
+.blur-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    pointer-events: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    .neon-button {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    .task {
+        padding: 10px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav ul {
+        flex-direction: column;
+    }
+
+    .game-grid {
+        grid-template-columns: 1fr;
+    }
+}
